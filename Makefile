@@ -2,11 +2,9 @@
 
 # When building for the first time, run the following to generate and apply migrations
 up-first-time:
-		docker-compose up -d
+		docker-compose --env-file .env.local up -d
 		sleep 5
 		docker-compose ps
-		sleep 3
-		dotenv -f .env.local pnpm migration:create:dev
 		sleep 3
 		dotenv -f .env.local pnpm migrate:dev
 		sleep 3
@@ -14,7 +12,7 @@ up-first-time:
 
 # If db migrations already in place, just run the following to init db and server
 up:
-		docker-compose up -d
+		docker-compose --env-file .env.local up -d
 		sleep 5
 		docker-compose ps
 		sleep 3
@@ -22,7 +20,7 @@ up:
 
 # Run the following to init only db without the server
 up-db:
-		docker-compose up -d
+		docker-compose --env-file .env.local up -d
 		sleep 5
 		docker-compose ps
 

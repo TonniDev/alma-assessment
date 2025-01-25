@@ -1,4 +1,4 @@
-import { Cookies } from '@/src/providers/Cookies';
+import { Providers } from '@/src/providers/providers';
 import { montserrat } from '@ui/fonts';
 
 import { Metadata } from 'next';
@@ -15,10 +15,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${montserrat.variable}`}>
-      <body>
-        <Cookies>
+      <body className="light">
+        <Providers>
           {children}
-        </Cookies>
+        </Providers>
       </body>
     </html>
   );
