@@ -1,0 +1,13 @@
+{
+    "name":"Alma",
+    "short_name":"Alma",
+    "start_url":"/",
+    "description":"Frontend assessment for Alma",
+    "icons":[
+        {"src":"/favicon-32xd32.png","sizes":"32x32","type":"image/png"},
+        {"src":"/apple-touch-icon.png","sizes":"256x256","type":"image/png"}
+    ],
+    "theme_color":"#D9DEA6",
+    "background_color":"#ffffff",
+    "display":"standalone"
+}

@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "types": [
+      "vitest/globals",
+      "vite/client",
+      "node",
+      "@testing-library/jest-dom"
+    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@ui/*": ["./src/ui/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@app/*": ["./src/app/*"],
+      "@api/*": ["./src/app/api/*"],
+      "@public/*": ["./public/*"],
+      "@src/*": ["./src/*"],
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["./next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx", "scripts/seed.js"],
+  "exclude": ["node_modules", "**/*.prisma"]
+}
