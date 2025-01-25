@@ -1,6 +1,3 @@
-import { GroupBase } from 'chakra-react-select';
-import { Path, PathValue } from 'react-hook-form';
-
 export const Countries = {
   AF: 'Afghanistan',
   AL: 'Albania',
@@ -197,7 +194,7 @@ export const Countries = {
   ZW: 'Zimbabwe',
 };
 
-type CountriesType = readonly { label: string; value: string; }[]
+type CountriesType = readonly { label: string; value: string }[];
 
 export function CountriesToArray(): CountriesType {
   return Object.entries(Countries).map(([key, value]) => ({
