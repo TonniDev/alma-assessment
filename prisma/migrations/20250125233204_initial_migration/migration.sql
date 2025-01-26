@@ -18,7 +18,7 @@ CREATE TABLE "leads" (
     "email" VARCHAR(255) NOT NULL,
     "country_of_citizenship" "ECountry" NOT NULL,
     "linkedin" VARCHAR(255) NOT NULL,
-    "visa_interest" "EVisa" NOT NULL,
+    "visa_interest" "EVisa"[],
     "description" TEXT NOT NULL,
     "status" "EStatus" NOT NULL,
     "resumeUrl" VARCHAR(255) NOT NULL,

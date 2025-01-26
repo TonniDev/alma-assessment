@@ -1,5 +1,3 @@
 export default async function Page() {
-  return (
-    <>Home page here</>
-  );
+  return <>Home page here</>;
 }

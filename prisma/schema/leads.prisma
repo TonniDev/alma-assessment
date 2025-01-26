@@ -212,7 +212,7 @@ model leads {
   email                String   @map(name: "email") @db.VarChar(255)
   countryOfCitizenship ECountry @map(name: "country_of_citizenship")
   linkedin             String   @db.VarChar(255)
-  visaInterest         EVisa    @map(name: "visa_interest")
+  visaInterest         EVisa[]  @map(name: "visa_interest")
   description          String   @db.Text
   status               EStatus
   resumeUrl            String   @db.VarChar(255)

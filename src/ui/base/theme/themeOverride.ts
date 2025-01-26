@@ -9,12 +9,12 @@ export const themeOverride = {
       fontFamily: { value: 'var(--font-montserrat)' },
     },
     breakpoints: {
-      base: {value:  '0em' },
-      sm: {value:  '30em' },
-      md: {value:  '52em' },
-      lg: {value:  '70em' },
-      xl: {value:  '85em' },
-      "2xl": {value: '96em' },
+      base: { value: '0em' },
+      sm: { value: '30em' },
+      md: { value: '52em' },
+      lg: { value: '70em' },
+      xl: { value: '85em' },
+      '2xl': { value: '96em' },
     },
     colors: {
       ...colors,

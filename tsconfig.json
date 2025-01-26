@@ -1,12 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "types": [
-      "vitest/globals",
-      "vite/client",
-      "node",
-      "@testing-library/jest-dom"
-    ],
+    "types": ["vitest/globals", "vite/client", "node", "@testing-library/jest-dom"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -14,7 +9,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -32,6 +27,7 @@
       "@api/*": ["./src/app/api/*"],
       "@public/*": ["./public/*"],
       "@src/*": ["./src/*"],
+      "@prisma/client": ["./node_modules/@prisma/client"],
       "@/*": ["./*"]
     }
   },
