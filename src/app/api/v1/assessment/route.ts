@@ -26,11 +26,8 @@ export async function POST(req: NextRequest) {
     resumeUrl: '',
   };
 
-  console.log('[[DATA TO SAVE]] ::: ', dataToSave);
-
   try {
     if (resume instanceof File) {
-      console.log('[[RESUME]] ::: ', resume, typeof resume);
       dataToSave = await GoogleImagesUploadUseCase(dataToSave, resume);
     }
 
@@ -56,13 +53,15 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
 
     const page = parseInt(searchParams.get('page') || '1', 10);
-    const pageSize = 10;
+    const pageSize = 5;
     const skip = (page - 1) * pageSize;
     const search = searchParams.get('search') || undefined;
     const status = searchParams.get('status') as EStatus | undefined;
 
-    let sort = searchParams.get('sort') || undefined;
+    const sort = searchParams.get('sort') || undefined;
     let orderBy: Record<string, 'asc' | 'desc'> | undefined;
+
+    console.log('[[SERVER]]::', { page, search, status, sort });
 
     if (sort) {
       const isDescending = sort.startsWith('-');
@@ -113,6 +112,32 @@ export async function GET(req: NextRequest) {
         pageSize,
         totalPages,
       },
+    });
+  } catch (error) {
+    console.error('[[ERROR]] ::: ', error);
+    return NextResponse.json({
+      status: 500,
+      message: 'Internal Server Error',
+    });
+  }
+}
+
+export async function PATCH(req: NextRequest) {
+  const body = await req.json();
+
+  try {
+    const updatedLead = await prisma.leads.update({
+      where: {
+        id: body.id,
+      },
+      data: {
+        status: body.status,
+      },
+    });
+
+    return NextResponse.json({
+      status: 200,
+      data: updatedLead,
     });
   } catch (error) {
     console.error('[[ERROR]] ::: ', error);

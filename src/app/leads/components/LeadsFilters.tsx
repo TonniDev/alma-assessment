@@ -5,7 +5,7 @@ import { EStatus } from '@prisma/client';
 import Search from '@ui/search';
 import { Select, OnChangeValue } from 'chakra-react-select';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 const statusOptions = [
   { label: 'Pending', value: EStatus.PENDING },
@@ -14,17 +14,21 @@ const statusOptions = [
 
 export const LeadsFilters = () => {
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
+  const params = useMemo(() => new URLSearchParams(searchParams), [searchParams]);
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const onChangeStatus = useCallback((option: OnChangeValue<{label: string; value: EStatus}, false>) => {
-    if (!option) {
-      void replace(`${pathname}`);
-    } else {
-      void replace(`${pathname}?status=${option.value}`);
-    }
-  }, [pathname, replace]);
+  const onChangeStatus = useCallback(
+    (option: OnChangeValue<{ label: string; value: EStatus }, false>) => {
+      if (!option) {
+        params.delete('status');
+      } else {
+        params.set('status', option.value);
+      }
+      void replace(`${pathname}?${params.toString()}`);
+    },
+    [params, pathname, replace],
+  );
 
   return (
     <Flex gap={1}>
