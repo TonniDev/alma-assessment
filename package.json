@@ -67,6 +67,7 @@
     "@eslint/eslintrc": "^3.2.0",
     "@svgr/webpack": "^8.1.0",
     "@tanstack/react-query-devtools": "^5.64.2",
+    "@testing-library/jest-dom": "^6.6.3",
     "@types/node": "^22.10.10",
     "@types/qs": "^6.9.18",
     "@types/react": "^19.0.8",
