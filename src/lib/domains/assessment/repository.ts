@@ -4,18 +4,20 @@ import { IRequestConfig } from '@lib/Network/types';
 export class AssessmentRepository {
   BASE_URL = '/assessment';
 
-  constructor(private readonly networkService: AxiosService<unknown>) {
+  constructor(private readonly networkService: AxiosService<never>) {
     this.networkService = networkService;
   }
 
-  async sendAssessment(config: IRequestConfig<FormData>) {
-    return await this.networkService.post(this.BASE_URL, {
+  async sendAssessment(config: IRequestConfig<FormData>): Promise<{ status: number; data: unknown }> {
+    const response = await this.networkService.post(this.BASE_URL, {
       headers: { 'Content-Type': 'multipart/form-data', ...config.headers },
       ...config,
     });
+    return response.data;
   }
 
   async getAssessments(config?: IRequestConfig) {
-    return await this.networkService.get(this.BASE_URL, config);
+    const response = await this.networkService.get(this.BASE_URL, config);
+    return response.data;
   }
 }

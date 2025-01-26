@@ -12,7 +12,8 @@ import { ValidatedSelect } from '@ui/base/RHF/ValidatedSelect';
 import { ValidatedCheckbox } from '@ui/base/RHF/ValidatedCheckbox';
 import { ValidatedFileUpload } from '@ui/base/RHF/ValidatedFileUpload';
 import { ValidatedTextarea } from '@ui/base/RHF/ValidatedTextarea';
-import { useMemo } from 'react';
+import { Modal } from '@ui/components/Modal';
+import { useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -52,6 +53,8 @@ const initialValues = {
 const repository = new AssessmentRepository(new AxiosService());
 
 export default function AssessmentForm() {
+  const [open, setOpen] = useState(false);
+
   const CountriesArray = useMemo(() => CountriesToArray(), []);
   const VisasArray = useMemo(() => [...VisasToArray(), { label: "I don't know", value: 'not_known' }], []);
   const {
@@ -89,8 +92,7 @@ export default function AssessmentForm() {
       const response = await repository.sendAssessment({ data: formData });
       if (response.status === 201) {
         reset(initialValues);
-        alert('Form submitted successfully');
-        // TODO: show success modal
+        setOpen(true);
       }
     } catch (error) {
       console.log('Error', error);
@@ -99,6 +101,17 @@ export default function AssessmentForm() {
 
   return (
     <Flex direction="column" gap={6} justify="flex-start" alignItems="center">
+      <Modal open={open} onClose={e => setOpen(e || false)}>
+        <Flex direction="column" gap={2} justify="flex-start" alignItems="center">
+          <Image src="/file_info.png" objectFit="contain" width="100px" alt="File info icon" />
+          <Text fontSize="2xl" fontWeight="bold" color="gray.900" mt={3}>
+            Thank you
+          </Text>
+          <Text fontSize="xl" textAlign="center" fontWeight="bold" color="gray.900" mt={3}>
+            Your information was submitted to our team of immigration attorneys. Expect an email from hello@tryalma.ai.
+          </Text>
+        </Flex>
+      </Modal>
       <Image src="/file_info.png" objectFit="contain" width="100px" alt="File info icon" />
       <Text fontSize="2xl" fontWeight="bold" color="gray.900" mt={3}>
         Want to understand your visa options?
