@@ -50,3 +50,75 @@ export async function POST(req: NextRequest) {
     });
   }
 }
+
+export async function GET(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+
+    const page = parseInt(searchParams.get('page') || '1', 10);
+    const pageSize = 10;
+    const skip = (page - 1) * pageSize;
+    const search = searchParams.get('search') || undefined;
+    const status = searchParams.get('status') as EStatus | undefined;
+
+    let sort = searchParams.get('sort') || undefined;
+    let orderBy: Record<string, 'asc' | 'desc'> | undefined;
+
+    if (sort) {
+      const isDescending = sort.startsWith('-');
+      const column = isDescending ? sort.slice(1) : sort; // Remove "-" for descending sort
+      orderBy = {
+        [column]: isDescending ? 'desc' : 'asc',
+      };
+    }
+
+    const whereClause: Record<string, unknown> = {};
+    if (search) {
+      whereClause.OR = [
+        {
+          firstName: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+        {
+          lastName: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+      ];
+    }
+
+    if (status) {
+      whereClause.status = status;
+    }
+
+    const leads = await prisma.leads.findMany({
+      skip,
+      take: pageSize,
+      where: whereClause,
+      orderBy,
+    });
+
+    const totalLeads = await prisma.leads.count({ where: whereClause });
+    const totalPages = Math.ceil(totalLeads / pageSize);
+
+    return NextResponse.json({
+      status: 200,
+      results: leads,
+      pagination: {
+        total: totalLeads,
+        page,
+        pageSize,
+        totalPages,
+      },
+    });
+  } catch (error) {
+    console.error('[[ERROR]] ::: ', error);
+    return NextResponse.json({
+      status: 500,
+      message: 'Internal Server Error',
+    });
+  }
+}

@@ -34,7 +34,6 @@ export const Modal = ({
     <DialogRoot placement={placement} motionPreset={motionPreset} lazyMount open={open} onOpenChange={handleClose}>
       {/* @ts-expect-error Missing type */}
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
-      {/* @ts-expect-error Missing type */}
       <DialogContent>
         {title && (
           <DialogHeader>
