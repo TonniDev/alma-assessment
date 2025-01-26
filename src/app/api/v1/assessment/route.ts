@@ -61,8 +61,6 @@ export async function GET(req: NextRequest) {
     const sort = searchParams.get('sort') || undefined;
     let orderBy: Record<string, 'asc' | 'desc'> | undefined;
 
-    console.log('[[SERVER]]::', { page, search, status, sort });
-
     if (sort) {
       const isDescending = sort.startsWith('-');
       const column = isDescending ? sort.slice(1) : sort; // Remove "-" for descending sort

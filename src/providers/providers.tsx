@@ -4,7 +4,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { ThemeProvider } from 'next-themes';
 import { theme } from '@ui/base/theme/theme';
 
-export function Providers({ children }: React.PropsWithChildren<{ cookie?: string }>) {
+export function Providers({ children }: React.PropsWithChildren) {
   return (
     <QueryProvider>
       <ChakraProvider value={theme}>
