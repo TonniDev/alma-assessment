@@ -2,17 +2,15 @@
 
 The project uses NodeJS version 20 or later. Make sure your local environment is using this version. Ideally use `nvm` or similar.
 
+## Run the project
 To start the project run `make up-first-time`.
 
-The routes are:
-
+## Routes available in the browser
 - /immigration-assessment
 - /auth
 - /leads
 
-
-The structure is as follows:
-
+## Project structure overview
 ```md
 src
 |
@@ -32,3 +30,9 @@ src
 |  |--base (base components: abstractions and atomic components)
 |  |--components (mid level components)
 ```
+
+## Alternative way to run
+
+A more manual way to run the project is by:
+1. run the command `make up` on a terminal window/tab
+2. on a different terminal run `make migrate` to apply the existing migration to the DB.
