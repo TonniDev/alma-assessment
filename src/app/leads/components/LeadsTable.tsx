@@ -1,10 +1,15 @@
 'use client';
-import { Stack, Table, Button, Flex } from '@chakra-ui/react';
+import { Button, Flex, Link, Stack, Table, Text } from '@chakra-ui/react';
 import { useAssessmentRepository } from '@lib/domains/assessment/useAssessmentRepository';
 import { useLeads } from '@lib/domains/assessment/useLeads';
 import { useUpdateLead } from '@lib/domains/assessment/useUpdateLead';
+import { Countries } from '@lib/utils/countries.constant';
+import { DefaultDateFormats, formatDateInLocalDate } from '@lib/utils/dates';
 import { EStatus } from '@prisma/client';
+import { Switch } from '@ui/base/chakra/switch';
+import { Drawer } from '@ui/components/Drawer';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { HiCheck } from 'react-icons/hi';
 
 export const LeadsTable = () => {
   const searchParams = useSearchParams();
@@ -38,14 +43,15 @@ export const LeadsTable = () => {
     <>Loading...</>
   ) : (
     <Stack width="full" gap="5">
-      <Table.Root size="sm" variant="outline" striped>
+      <Table.Root size="sm" variant="outline">
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeader>Name</Table.ColumnHeader>
             <Table.ColumnHeader>Submitted</Table.ColumnHeader>
+            <Table.ColumnHeader>Email</Table.ColumnHeader>
             <Table.ColumnHeader>Status</Table.ColumnHeader>
             <Table.ColumnHeader>Country</Table.ColumnHeader>
-            <Table.ColumnHeader textAlign="end">Update</Table.ColumnHeader>
+            <Table.ColumnHeader textAlign="end">Details</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -58,13 +64,71 @@ export const LeadsTable = () => {
                 <Table.Cell>
                   {item.firstName} {item.lastName}
                 </Table.Cell>
-                <Table.Cell>{item.created}</Table.Cell>
-                <Table.Cell>{item.status}</Table.Cell>
-                <Table.Cell>{item.countryOfCitizenship}</Table.Cell>
+                <Table.Cell>{formatDateInLocalDate(item.created, DefaultDateFormats.USTime)}</Table.Cell>
+                <Table.Cell>{item.email}</Table.Cell>
+                <Table.Cell>
+                  <Flex gap={2}>
+                    {item.status}
+                    <Switch
+                      size="sm"
+                      colorPalette="green"
+                      disabled={item.status === EStatus.REACHED_OUT}
+                      checked={item.status === EStatus.REACHED_OUT}
+                      thumbLabel={{ on: <HiCheck /> }}
+                      onCheckedChange={handleMarkAsReachedOut}
+                    />
+                  </Flex>
+                </Table.Cell>
+                <Table.Cell>{Countries[item.countryOfCitizenship]}</Table.Cell>
                 <Table.Cell textAlign="end">
-                  <Button disabled={item.status === EStatus.REACHED_OUT} onClick={handleMarkAsReachedOut}>
-                    Mark as reached out.
-                  </Button>
+                  <Drawer
+                    title={`${item.firstName} ${item.lastName} - ${item.status}`}
+                    size="lg"
+                    trigger={<Button size="xs">View details</Button>}
+                  >
+                    <Flex direction="column" gap={2} p={4}>
+                      <Text>
+                        <Text as="span" fontWeight="bold">
+                          Name:{' '}
+                        </Text>
+                        {item.firstName} {item.lastName}
+                      </Text>
+                      <Text>
+                        <Text as="span" fontWeight="bold">
+                          Email:{' '}
+                        </Text>
+                        {item.email}
+                      </Text>
+                      <Text>
+                        <Text as="span" fontWeight="bold">
+                          LinkedIn:{' '}
+                        </Text>
+                        {item.linkedinUrl || '--'}
+                      </Text>
+                      <Text>
+                        <Text as="span" fontWeight="bold">
+                          Resume:{' '}
+                        </Text>
+                        {item.resumeUrl ? (
+                          <Link variant="underline" colorPalette="blue" href={item.resumeUrl}>
+                            {item.firstName} resume
+                          </Link>
+                        ) : (
+                          '--'
+                        )}
+                      </Text>
+                      <Text>
+                        <Text as="span" fontWeight="bold">
+                          Country of citizenship:{' '}
+                        </Text>
+                        {Countries[item.countryOfCitizenship]}
+                      </Text>
+                      <Text>
+                        <Text fontWeight="bold">Description: </Text>
+                        {item.description}
+                      </Text>
+                    </Flex>
+                  </Drawer>
                 </Table.Cell>
               </Table.Row>
             );
