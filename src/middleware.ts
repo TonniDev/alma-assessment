@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get('auth-token')?.value;
-  const publicRoutes = ['/auth', '/auth/logout', '/immigration-assessment', '/api/v1/assessment'];
+  const publicRoutes = ['/auth', '/auth/logout', '/immigration-assessment', '/api/v1/assessment', '/assessment'];
 
   const isApiRoute = req.nextUrl.pathname.startsWith('/api');
   const isPublicRoute = publicRoutes.some(route => req.nextUrl.pathname.startsWith(route));
