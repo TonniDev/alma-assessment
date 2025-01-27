@@ -30,7 +30,6 @@ export async function POST(req: NextRequest) {
     if (resume instanceof File) {
       dataToSave = await GoogleImagesUploadUseCase(dataToSave, resume);
     }
-
     const savedData = await prisma.leads.create({
       data: dataToSave,
     });

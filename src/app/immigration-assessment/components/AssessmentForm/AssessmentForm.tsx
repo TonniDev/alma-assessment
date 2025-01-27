@@ -56,7 +56,7 @@ export default function AssessmentForm() {
   const [open, setOpen] = useState(false);
 
   const CountriesArray = useMemo(() => CountriesToArray(), []);
-  const VisasArray = useMemo(() => [...VisasToArray(), { label: "I don't know", value: 'not_known' }], []);
+  const VisasArray = useMemo(() => [...VisasToArray()], []);
   const {
     register,
     handleSubmit,
@@ -75,8 +75,6 @@ export default function AssessmentForm() {
   const resumeFile = watch('resume');
 
   const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
-    console.log('Submitting the form', data);
-
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
       if (key === 'visaType') {

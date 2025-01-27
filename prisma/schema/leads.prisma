@@ -195,9 +195,10 @@ enum ECountry {
 }
 
 enum EVisa {
-  O1     @map("O-1")
-  EB1A   @map("EB-1A")
-  EB2NIW @map("EB-2-NIW")
+  O1        @map("O-1")
+  EB1A      @map("EB-1A")
+  EB2NIW    @map("EB-2-NIW")
+  NOT_KNOWN @map("not_known")
 }
 
 enum EStatus {

@@ -39,7 +39,7 @@ const upload = (fileName: string, blob: File, bucket: Bucket) =>
       resumable: true,
     });
     stream.on('error', (err: Error) => {
-      err.message = `::[UPLOAD ERROR]:: ${err.message}]`;
+      err.message = `::[UPLOAD STREAM ERROR]:: ${err.message}]`;
       reject(err);
     });
     stream.on('finish', () => {

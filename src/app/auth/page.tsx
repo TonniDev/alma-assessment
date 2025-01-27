@@ -18,7 +18,6 @@ const LoginPage = () => {
     e.preventDefault();
     const res = await repository.login({ data: { username, password } });
     if (res.status === 200) {
-      console.log('Redirecting to leads page');
       replace('/leads');
     } else {
       setError('Invalid username or password');

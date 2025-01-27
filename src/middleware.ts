@@ -3,13 +3,11 @@ import { NextResponse } from 'next/server';
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get('auth-token')?.value;
-  const publicRoutes = ['/auth', '/auth/logout', '/immigration-assessment'];
+  const publicRoutes = ['/auth', '/auth/logout', '/immigration-assessment', '/api/v1/*'];
   const isPublicRoute = publicRoutes.some(route => req.nextUrl.pathname.startsWith(route));
 
-  console.log('READING', token, isPublicRoute);
-
   if (isPublicRoute) {
-    if (token) {
+    if (token && req.nextUrl.pathname.startsWith('/auth')) {
       return NextResponse.redirect(new URL('/leads', req.url));
     }
     return NextResponse.next();
