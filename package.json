@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "NODE_OPTIONS='--inspect' next dev",
+    "dev": "NODE_ENV=development next dev",
+    "dev:inspect": "NODE_OPTIONS='--inspect' next dev",
     "start": "next start",
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "migration:create:dev": "prisma migrate dev --create-only",

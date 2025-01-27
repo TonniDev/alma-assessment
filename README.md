@@ -34,5 +34,6 @@ src
 ## Alternative way to run
 
 A more manual way to run the project is by:
-1. run the command `make up` on a terminal window/tab
-2. on a different terminal run `make migrate` to apply the existing migration to the DB.
+1. install dependencies with `pnpm i`
+2. run the command `make up` on a terminal window/tab
+3. on a different terminal run `make migrate` to apply the existing migration to the DB.

@@ -2,6 +2,8 @@
 
 # When building for the first time, run the following to generate and apply migrations
 up-first-time:
+		pnpm i
+		sleep 2
 		docker-compose --env-file .env.local up -d
 		sleep 5
 		docker-compose ps
